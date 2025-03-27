@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "utils.h"
+#include "CargarRegistro.h"
 
 using namespace std;
 int main()
@@ -12,6 +13,7 @@ int main()
 
     int opcion = 0;
     bool jugando = true;
+    CargarRegistro cargarRegistro ;
 
     do
     {
@@ -57,6 +59,7 @@ int main()
 
         case 2:
             cout << "Cargar Registro" << endl;
+            cargarRegistro.cargarUnRegistro();
             
             break;
 
