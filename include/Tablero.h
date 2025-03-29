@@ -45,18 +45,18 @@ public:
     NodoCasilla<T> *inicio;
     /// Tablero 3D
     /// dimesiones del tablero
-    int filas=2;
-    int columnas=2;
+    int fila=2;
+    int columna=2;
     int altura=2;
     NodoCasilla<T>*** tablero = new NodoCasilla<T>**[filas];
 
-    Tablero(int filas, int columnas, int altura);
+    Tablero(int fila, int columna, int altura);
 
     void construirTablero3D();
     void imprimirTablero2D(int z);                    // Imprime un plano 2D desde vita de planta
 
     void agregarObjetoRamdon();
-    NodoCasilla<T> *getCasilla(int x, int y, int z);  /// coordenadas del Objeto
+    NodoCasilla<T> *getObjeto(int x, int y, int z);  /// coordenadas del Objeto
     bool setObjeto(int x, int y, int z, T *objeto);   // agregregar Objeto en 3D
 
 };
