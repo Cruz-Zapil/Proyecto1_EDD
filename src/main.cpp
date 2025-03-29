@@ -1,10 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <limits>
-#include <vector>
 
-#include "utils.h"
+
+
 #include "CargarRegistro.h"
 
 using namespace std;

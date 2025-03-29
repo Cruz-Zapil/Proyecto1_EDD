@@ -1,0 +1,4 @@
+/home/CruzZapil/Escritorio/Proyecto_1/cmake-build-debug/CMakeFiles/tinyfiledialogs.dir
+/home/CruzZapil/Escritorio/Proyecto_1/cmake-build-debug/CMakeFiles/Proyecto_1.dir
+/home/CruzZapil/Escritorio/Proyecto_1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/CruzZapil/Escritorio/Proyecto_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

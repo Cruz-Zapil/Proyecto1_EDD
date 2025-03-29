@@ -101,6 +101,7 @@ misrepresented as being the original software.
 
 #include "tinyfiledialogs.h"
 
+
 #define MAX_PATH_OR_CMD 1024 /* _MAX_PATH or MAX_PATH */
 
 #ifndef MAX_MULTIPLE_FILES

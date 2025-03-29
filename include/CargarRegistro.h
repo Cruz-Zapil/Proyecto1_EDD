@@ -1,8 +1,8 @@
 #ifndef CARGARREGISTRO_H
 #define CARGARREGISTRO_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include "tinyfiledialogs.h"
 
