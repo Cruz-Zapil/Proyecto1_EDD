@@ -28,7 +28,6 @@ void Tablero<T>::construirTablero3D(){
         }
     }
 
-
     /// enlazamos cada nodo con sus vecinos
     for (int i = 0; i < fila; i++) {
         for (int j = 0; j < columna; j++) {

@@ -6,12 +6,13 @@
 
 class Enemigo : public Objeto {
     private:
-        int vida;
+        int vida=30;
+        int nivelAtaque=7;
 
     public:
-        Enemigo(int ataque, int x, int y, int z, int vida, int nivel);
+        Enemigo();
 
-        void atacar() override;
+        int ataqueEnemigo();
         void recibirAtaque(int ataque, string nombre);
         
         ~Enemigo() override = default;

@@ -28,6 +28,7 @@ add_library(tinyfiledialogs STATIC ${TINYFD_SOURCE})
 # Archivos fuente (mejor especificar manualmente)
 set(SOURCES
         src/main.cpp
+        include/objeto/Tesoro.h
         # Añade aquí otros .cpp cuando los tengas
         # src/OtraClase.cpp
 )
