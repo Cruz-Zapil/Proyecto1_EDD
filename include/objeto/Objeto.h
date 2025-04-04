@@ -15,13 +15,11 @@ class Objeto {
 
 
     public:
-        /// Constructor
-        Objeto(string tipoObjeto, int posicionX, int posicionY, int posicionZ) {
 
+        Objeto() = default;
+        /// Constructor
+        Objeto(string tipoObjeto) {
             this->tipoObjeto = tipoObjeto;
-            this->posicionX = posicionX;
-            this->posicionY = posicionY;
-            this->posicionZ = posicionZ;
 
         };
 
@@ -30,8 +28,13 @@ class Objeto {
             cout<< tipoObjeto <<"esta en la posicion:" << posicionX << " " << posicionY << " " << posicionZ << endl;
         };
 
+        void setPosicion(int posX,int posY,  int posZ ) {
+            this->posicionX = posX;
+            this->posicionY = posY;
+            this->posicionZ = posZ;
+        }
 
-        string gettipoObjeto() {
+        string getipoObjeto() {
             return tipoObjeto;
         };
 

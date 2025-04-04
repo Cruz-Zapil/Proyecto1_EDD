@@ -6,16 +6,23 @@
 
 class Tesoro  : public Objeto {
 
-    private:
+private:
 
-        int oro=100;
+    int oro;
 
 
-    public:
+public:
 
-    Tesoro();
-        int oroTesoro();
-        void descripcion();
+
+    Tesoro()
+        : Objeto ("Tesoro"),
+    oro(100){};
+
+    int oroTesoro() {
+        return oro;
+    };
+    void descripcion();
+
     ~Tesoro() override = default;
 
 };

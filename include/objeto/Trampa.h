@@ -7,12 +7,17 @@
 class Trampa : public Objeto {
 
   private:
-     int nivelAtaque=3;
+     int nivelDanio;
 
   public:
 
-    Trampa();
-    int ataqueTrampa();
+    Trampa()
+        :Objeto("Trampa"),
+        nivelDanio(3){};
+
+    int ataqueTrampa(){
+      return nivelDanio;
+    };
 
     ~Trampa() override = default;
 

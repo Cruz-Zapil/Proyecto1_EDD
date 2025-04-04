@@ -16,6 +16,7 @@ endif()
 
 # Incluye directorios
 include_directories(
+        ${PROJECT_SOURCE_DIR}/include/utils
         ${PROJECT_SOURCE_DIR}/include/objeto
         ${PROJECT_SOURCE_DIR}/include/
         ${PROJECT_SOURCE_DIR}/lib/utils
@@ -28,7 +29,8 @@ add_library(tinyfiledialogs STATIC ${TINYFD_SOURCE})
 # Archivos fuente (mejor especificar manualmente)
 set(SOURCES
         src/main.cpp
-        include/objeto/Tesoro.h
+        lib/Jugar.cpp
+        include/objeto/Util.h
         # Añade aquí otros .cpp cuando los tengas
         # src/OtraClase.cpp
 )

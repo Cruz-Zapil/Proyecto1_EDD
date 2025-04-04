@@ -8,12 +8,17 @@ class Pocima : public Objeto {
 
   private:
 
-    int vidaExtra=4;
+    int vidaExtra;
 
   public:
 
-    Pocima();
-    int vidaExtraPocima();
+    Pocima()
+        :Objeto("Pocima"),
+        vidaExtra(10){};
+
+    int getPosima(){
+      return vidaExtra;
+    };
 
 
     ~Pocima() override = default;

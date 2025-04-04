@@ -1,7 +1,15 @@
 # ninja log v6
-460	523	1743195962890058455	Proyecto_1	feaaf7d22e8ef200
-411	460	1743195962841058453	libtinyfiledialogs.a	2c716eb15847fc76
-2	400	1743195962432735246	CMakeFiles/Proyecto_1.dir/src/main.cpp.o	b9611e383597240
-2	411	1743195962432058433	CMakeFiles/tinyfiledialogs.dir/lib/utils/tinyfiledialogs.cpp.o	eca6f9a369f17975
-0	4	1743195492631036031	clean	21ba2b311d38ca03
-1	25	1743608988658074608	build.ninja	b1967da657772eca
+548	675	1743746614209411757	Proyecto_1	2150eb7459c2bd74
+1	548	1743746613661533311	CMakeFiles/Proyecto_1.dir/lib/Jugar.cpp.o	4eb09236b6d9cf24
+1	19	1743787697138622432	build.ninja	b1967da657772eca
+1	394	1743704963132082261	CMakeFiles/tinyfiledialogs.dir/lib/utils/tinyfiledialogs.cpp.o	518582c31bed821
+1	26	1743705204814093785	libtinyfiledialogs.a	2c716eb15847fc76
+1	450	1743746613660411724	CMakeFiles/Proyecto_1.dir/src/main.cpp.o	82dc65719df5c28e
+1	12	1743746162409384573	CMakeFiles/Proyecto_1.dir/lib/Tablero.cpp.o	f0f468b2e7b05fda
+2	500	1743787820592628319	CMakeFiles/Proyecto_1.dir/src/main.cpp.o	82dc65719df5c28e
+1	405	1743787864599987497	CMakeFiles/Proyecto_1.dir/lib/Jugar.cpp.o	4eb09236b6d9cf24
+1	417	1743787864598630417	CMakeFiles/Proyecto_1.dir/src/main.cpp.o	82dc65719df5c28e
+417	513	1743787865014630437	Proyecto_1	5d70adf69f58f717
+2	395	1743789616270713944	CMakeFiles/Proyecto_1.dir/lib/Jugar.cpp.o	4eb09236b6d9cf24
+1	411	1743789616269713944	CMakeFiles/Proyecto_1.dir/src/main.cpp.o	82dc65719df5c28e
+411	478	1743789616679713963	Proyecto_1	5d70adf69f58f717

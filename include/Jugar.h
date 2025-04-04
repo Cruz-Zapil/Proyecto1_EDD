@@ -1,33 +1,38 @@
 #ifndef JUGAR_H
 #define JUGAR_H
 
-#include <iostream>
 #include "Tablero.h"
 #include "Objeto.h"
-
+#include "Tesoro.h"
+#include "Util.h"
 
 
 using namespace std;
 
-class Jugar
-{
+class Jugar{
 
-    private:
 
-      Tablero<Objeto*> tablero3D;
-      int tamanioTablero;
+      Tablero<Objeto*>* tablero3D = nullptr; //  Puntero que puedes inicializar después
+
+      Util util;
+      int tamanioFijo=2;
+      int numeroNodos ;
       int cantObjetos;
-
+      int fila, columna, altura;
+      Objeto* jugador;
+      Tesoro tesoro;
 
 
 
     public:
-
-      void crearTablero();
+      void iniciarJuego();
+      void crearTablero(int x, int y, int z);
+      void crearPersonaje();
       void crearObjetos();
-      void crearPersonajes();
-      void ingresarObjetosAlMundo();
+      void crearTesoro();
+      void moverPersonaje();
       void jugar();
+      void registro();
 
 
 };

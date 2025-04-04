@@ -2,9 +2,9 @@
 #include <fstream>
 #include <limits>
 
-
-
 #include "CargarRegistro.h"
+#include "Util.h"
+#include "Jugar.h"
 
 using namespace std;
 int main()
@@ -13,6 +13,17 @@ int main()
     int opcion = 0;
     bool jugando = true;
     CargarRegistro cargarRegistro ;
+    Util  util ;
+    Jugar jugar;
+
+
+    util.colorAzul ("__________________________");
+    util.colorRojo ("__________________________");
+    util.colorVerde("_____   Bienvenido  ______");
+    util.colorRojo ("__________________________");
+    util.colorAzul ("__________________________");
+    cout << endl<<endl;
+
 
     do
     {
@@ -20,21 +31,24 @@ int main()
              << endl
              << endl
              << endl;
-        cout << "_________________________" << endl;
-        cout << "_________________________" << endl;
-        cout << "_______   Menu   ________" << endl;
-        cout << "_________________________" << endl;
-        cout << "_________________________" << endl
-             << endl;
 
-        cout << "Seleccione una opcion:" << endl;
+        util.colorVerde   ("___________________________");
+        util.colorAmarillo("___________________________");
+        util.colorRojo    ("________   MENÚ   _________");
+        util.colorAmarillo("___________________________");
+        util.colorVerde   ("___________________________");
+          
 
-        cout << "1. Jugar" << endl;
-        cout << "2. Cargar Registro" << endl;
-        cout << "3. Mostrar Reporte " << endl;
-        cout << "4. Salir" << endl;
+        cout << endl;
+        util.colorMagenta("__________________________");
+        cout <<   "Seleccione una opcion:" << endl;
 
-        cout << "_________________________" << endl;
+        cout << "1.";  util.colorVerde   ("Jugar");
+        cout << "2.";  util.colorAmarillo("Cargar Registro");
+        cout << "3.";  util.colorAzul    ("Mostrar Reporte ");
+        cout << "4.";  util.colorRojo    ("Salir");
+
+        util.colorMagenta("__________________________");
        
         cout << "Ingrese su opción: ";
         cin >> opcion;
@@ -52,8 +66,8 @@ int main()
         switch (opcion)
         {
         case 1:
-            cout << "Jugar" << endl;
 
+            jugar.iniciarJuego();
             break;
 
         case 2:
@@ -68,10 +82,9 @@ int main()
 
         case 4:
 
-        cout << "_________________________" << endl;
-        cout << "_______   Adios  ________" << endl;
-        cout << "_________________________" << endl
-             << endl;
+        util.colorRojo( "_________________________" );
+        util.colorRojo( "_______   Adios  ________" );
+        util.colorRojo( "_________________________" );
             jugando = false;
             break;
 
