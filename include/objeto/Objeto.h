@@ -17,6 +17,7 @@ class Objeto {
     public:
 
         Objeto() = default;
+
         /// Constructor
         Objeto(string tipoObjeto) {
             this->tipoObjeto = tipoObjeto;

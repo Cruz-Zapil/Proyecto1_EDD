@@ -58,12 +58,28 @@ class Util {
     };
 
     int aleatorio_en_rango(int min, int max) {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(min, max);
+
+        static random_device rd;
+        static mt19937 gen(rd());
+        uniform_int_distribution<> distrib(min, max-1);
         return distrib(gen);
     }
 
+    void colorVerdeJ(string mensaje) {
+        cout << "\033[32m"<<mensaje<< "\033[0m" ;
+    };
+
+    void colorAmarilloT(string mensaje) {
+        cout << "\033[33m"<<mensaje<< "\033[0m" ;
+    };
+
+    void colorMagentaP(string mensaje) {
+        cout << "\033[33m"<<mensaje<< "\033[0m" ;
+    };
+
+    void colorAzulP(string mensaje) {
+        cout << "\033[34m"<<mensaje<< "\033[0m" ;
+    };
 
 
 };
