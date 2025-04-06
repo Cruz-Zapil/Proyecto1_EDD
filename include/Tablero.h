@@ -17,6 +17,7 @@ using namespace std;
 template<typename T>
 class NodoCasilla {
 public:
+    int x, y, z;
     T *contenido;
     bool bloqueado;
     bool ocupado;
@@ -65,7 +66,9 @@ public:
 
     bool setObjeto(int x, int y, int z, T *objeto);
 
-    NodoCasilla<T> *casillaSiguiente(NodoCasilla<T> * &jugador, string direccion);
+    void eliminarObjeto(int x, int y, int z);
+
+    NodoCasilla<T> *casillaSiguiente(Objeto *jugador, string direccion);
 };
 
 /// ==========================
@@ -84,7 +87,6 @@ Tablero<T>::Tablero(int filas, int columnas, int altura) {
 
 template<typename T>
 void Tablero<T>::construirTablero3D() {
-
     tablero = new NodoCasilla<T> **[fila];
     for (int i = 0; i < fila; i++) {
         tablero[i] = new NodoCasilla<T> *[columna];
@@ -127,10 +129,10 @@ void Tablero<T>::imprimirTablero2D(int z) {
 
     for (int i = 0; i < fila; i++) {
         for (int j = 0; j < columna; j++) {
-            if (tablero[i][j][z].ocupado && tablero[i][j][z].contenido != nullptr ) {
+            if (tablero[i][j][z].ocupado && tablero[i][j][z].contenido != nullptr) {
                 /// verificar si el contenido es un personaje para mostrarl
 
-                Objeto* obj = tablero[i][j][z].contenido;  // Correcto
+                Objeto *obj = tablero[i][j][z].contenido; // Correcto
 
                 if (obj == nullptr) {
                     cout << "[ ] ";
@@ -138,11 +140,11 @@ void Tablero<T>::imprimirTablero2D(int z) {
                 }
                 if (dynamic_cast<Jugador *>(obj)) {
                     util.colorVerdeJ("[Õ] ");
-                      } else if (dynamic_cast<Pista *>(obj)) {
-                        util.colorMagentaP("[╬] ");
-                    } else if (dynamic_cast<Pocima *>(obj)) {
-                         util.colorAzulP("[°] ");
-                }else {
+                } else if (dynamic_cast<Pista *>(obj)) {
+                    util.colorMagentaP("[╬] ");
+                } else if (dynamic_cast<Pocima *>(obj)) {
+                    util.colorAzulP("[°] ");
+                } else {
                     cout << "[ ] ";
                 }
             } else {
@@ -153,9 +155,49 @@ void Tablero<T>::imprimirTablero2D(int z) {
     }
 }
 
-template<typename T>
-NodoCasilla<T>* Tablero<T>::getObjeto(int x, int y, int z) {
 
+template<typename T>
+NodoCasilla<T> *Tablero<T>::casillaSiguiente(Objeto *jugador, string direccion) {
+    NodoCasilla<T> *destino = nullptr;
+
+    // Obtener las coordenadas actuales del jugador
+    int x = jugador->getPosX();
+    int y = jugador->getPosY();
+    int z = jugador->getPosZ();
+
+    // Según la dirección, determinamos la casilla destino
+    if (direccion == "q" && x > 0) {
+        // Mover hacia arriba (si no está en el borde)
+        destino = &tablero[x - 1][y][z];
+    } else if (direccion == "e" && x < fila - 1) {
+        // Mover hacia abajo (si no está en el borde)
+        destino = &tablero[x + 1][y][z];
+    } else if (direccion == "a" && y > 0) {
+        // Mover hacia la izquierda
+        destino = &tablero[x][y - 1][z];
+    } else if (direccion == "d" && y < columna - 1) {
+        // Mover hacia la derecha
+        destino = &tablero[x][y + 1][z];
+    } else if (direccion == "w" && z > 0) {
+        // Mover hacia adelante
+        destino = &tablero[x][y][z - 1];
+    } else if (direccion == "s" && z < altura - 1) {
+        // Mover hacia atrás
+        destino = &tablero[x][y][z + 1];
+    }
+
+    // Si el destino es válido y no está ocupado, podemos mover al jugador
+    if (destino != nullptr && !destino->ocupado) {
+        return destino;
+    } else {
+        util.colorRojo("Movimiento inválido o fuera de los límites.");
+        return nullptr;
+    }
+}
+
+
+template<typename T>
+NodoCasilla<T> *Tablero<T>::getObjeto(int x, int y, int z) {
     if (x >= 0 && x < fila && y >= 0 && y < columna && z >= 0 && z < altura) {
         return &tablero[x][y][z];
     }
@@ -166,7 +208,7 @@ NodoCasilla<T>* Tablero<T>::getObjeto(int x, int y, int z) {
 template<typename T>
 bool Tablero<T>::setObjeto(int x, int y, int z, T *objeto) {
     if (x >= 0 && x < fila && y >= 0 && y < columna && z >= 0 && z < altura) {
-        NodoCasilla<T>* nodo = &tablero[x][y][z];
+        NodoCasilla<T> *nodo = &tablero[x][y][z];
 
         if (!nodo->ocupado && !nodo->bloqueado) {
             nodo->contenido = objeto;
@@ -177,29 +219,16 @@ bool Tablero<T>::setObjeto(int x, int y, int z, T *objeto) {
     return false;
 }
 
-
-
 template<typename T>
-NodoCasilla<T> *Tablero<T>::casillaSiguiente(NodoCasilla<T> * &jugador, string direccion) {
-    NodoCasilla<T> *destino = nullptr;
+void Tablero<T>::eliminarObjeto(int x, int y, int z) {
+    // Verificamos que la posición sea válida
+    if (x >= 0 && x < fila && y >= 0 && y < columna && z >= 0 && z < altura) {
+        // Establecemos el contenido del nodo en nullptr para eliminar el objeto
 
-    if (direccion == "q" && jugador->arriba)
-        destino = jugador->arriba;
-    else if (direccion == "e" && jugador->abajo)
-        destino = jugador->abajo;
-    else if (direccion == "a" && jugador->izquierda)
-        destino = jugador->izquierda;
-    else if (direccion == "d" && jugador->derecha)
-        destino = jugador->derecha;
-    else if (direccion == "w" && jugador->adelante)
-        destino = jugador->adelante;
-    else if (direccion == "s" && jugador->atras)
-        destino = jugador->atras;
-    else {
-        util.colorRojo("Movimiento invalido o fuera de los límites.");
-        return nullptr;
+        tablero[x][y][z].contenido = nullptr;
+        tablero[x][y][z].ocupado = false;
     }
-    return destino;
 }
+
 
 #endif // TABLERO_H

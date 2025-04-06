@@ -54,6 +54,8 @@ public:
     }
 */
 
+
+
     // Métodos adicionales
     string getNombre() const { return nombre; }
     int getVida() const { return vida; }

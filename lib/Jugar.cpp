@@ -38,7 +38,9 @@ void Jugar::iniciarJuego() {
     crearTesoro();
     crearPista();
     crearObjetos();
-    tablero3D->imprimirTablero2D(2);
+    tablero3D->imprimirTablero2D(jugador->getPosZ());
+
+    jugar();
 }
 
 void Jugar::crearTablero(int fila, int columna, int altura) {
@@ -60,6 +62,7 @@ void Jugar::crearPersonaje() {
 
         if (tmpPersonaje) {
             cout << "Jugador creado en (" << tmpx << ", " << tmpy << ", " << tmpz << ")\n";
+            jugador->setPosicion(tmpx, tmpy, tmpz);
         }
 
     } while (!tmpPersonaje);
@@ -108,9 +111,6 @@ void Jugar::crearObjetos() {
 }
 
 
-
-
-
 bool Jugar::colocarObjetoEnTablero(Objeto* obj) {
 
     int intentos = 0;
@@ -148,3 +148,58 @@ bool Jugar::colocarObjetoEnTablero(Objeto* obj) {
     }
     return colocado;
 }
+
+
+void Jugar::jugar() {
+
+    bool vida = false;
+
+    do {
+      //  moverJugador(direccion);
+
+
+    }while (!vida);
+
+}
+
+
+void Jugar::moverJugador(string direccion) {
+
+    NodoCasilla<Objeto>* destino = tablero3D->casillaSiguiente(jugador, direccion);
+
+    if (destino != nullptr) {
+
+        if (destino->ocupado) {
+            Objeto* objDestino = destino->contenido;
+
+            // Verificar el tipo de objeto en la casilla destino
+            if (dynamic_cast<Enemigo*>(objDestino)) {
+                iniciarBatalla(dynamic_cast<Enemigo*>(objDestino));
+            }
+            else if (dynamic_cast<Trampa*>(objDestino)) {
+                manejarTrampa(dynamic_cast<Trampa*>(objDestino));
+            }
+            else if (dynamic_cast<Pocima*>(objDestino)) {
+                manejarPocima(dynamic_cast<Pocima*>(objDestino));
+            }
+            else if (dynamic_cast<Pista*>(objDestino)) {
+                manejarPista(dynamic_cast<Pista*>(objDestino));
+            }
+            else {
+                util.colorRojo("Movimiento inválido: la casilla está ocupada por un objeto desconocido.");
+            }
+        } else {
+            // Si la casilla no está ocupada, solo movemos al jugador
+            tablero3D->eliminarObjeto(jugador->getPosX(), jugador->getPosY(), jugador->getPosZ());
+            jugador->setPosicion(destino->x, destino->y, destino->z);
+            tablero3D->setObjeto(jugador->getPosX(), jugador->getPosY(), jugador->getPosZ(), jugador);
+        }
+
+        // Imprimir el tablero después del movimiento
+        tablero3D->imprimirTablero2D(jugador->getPosZ());
+    } else {
+        cout << "Movimiento fallido: fuera de los límites o dirección inválida." << endl;
+    }
+}
+
+
