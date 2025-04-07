@@ -81,6 +81,9 @@ class Util {
         cout << "\033[34m"<<mensaje<< "\033[0m" ;
     };
 
+void colorRojoA(string mensaje) {
+        cout << "\033[31m"<<mensaje<< "\033[0m" ;
+    };
 
 };
 

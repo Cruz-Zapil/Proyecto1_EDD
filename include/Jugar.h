@@ -11,14 +11,14 @@ using namespace std;
 
 class Jugar {
     Tablero<Objeto> *tablero3D = nullptr; //  Puntero que puedes inicializar después
-
+    NodoCasilla<Objeto>* destino = nullptr;
     Util util;
     int tamanioFijo = 2;
     int numeroNodos;
     int cantObjetos;
     int fila, columna, altura;
     int tesoroX, tesoroY, tesoroZ;
-    Objeto* jugador;
+    Jugador* jugador;
     Tesoro tesoro;
 
 public:
@@ -50,6 +50,9 @@ public:
 
     void manejarPista(Objeto *obj);
 
+    void manejarTesoro(Objeto *obj);
+
+    void actualizarPosicion();
 
 };
 

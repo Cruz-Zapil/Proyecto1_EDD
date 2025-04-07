@@ -3,6 +3,7 @@
 
 #include "Objeto.h" 
 #include <string>
+#include "Util.h"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ private:
     int tiempoTotal;
     int puntos;
     int nivelAtaque;
+    Util util;
 
 public:
 
@@ -26,33 +28,32 @@ public:
         nivelAtaque(5){};
 
 
-    void recibirAtaque(int ataque, string atacante){
+    void recibirAtaque(int ataque, string atacante) {
         vida -= ataque;
-        cout << "El jugador " << this->nombre << " ha recibido un ataque de " << ataque<<" del"<< atacante
-             << " puntos de vida" << endl;
+        cout<<endl;
+        util.colorRojo("_____________________________________");
+        util.colorRojoA("¡" + atacante + " ha lanzado un ataque de " + to_string(ataque) );
+        cout << endl;
+        util.colorRojo("puntos! ➤ Vida reducida.");
+        util.colorVerde("💚 vida:  "+ to_string(vida));
+        util.colorRojo("_____________________________________");
+    }
 
-
-    };
     int ataqueJugador(){
         return nivelAtaque;
 
     };
-    void recibirVidaExtra(int vida){
 
-        vida += vida;
-        cout << "El jugador " << this->nombre << " ha recibido " << vida << " puntos de vida" << endl;
+    void recibirVidaExtra(int extra) {
+        vida += extra;
+        cout<<endl;
+        util.colorVerde("_____________________________________");
+        util.colorVerdeJ("💚 ¡Has encontrado una pócima! +");
+        cout << extra << " " << endl;
+        util.colorVerde("puntos de vida. ➤ Salud restaurada.");
+        util.colorVerde("_____________________________________");
 
-    };
-
-    /*
-    // Implementación de métodos virtuales de Objeto
-    string posicion()  {
-        return "Jugador " + nombre + " en (" +
-               to_string(posX) + "," +
-               to_string(posY) + "," +
-               to_string(posZ) + ")";
     }
-*/
 
 
 
@@ -61,7 +62,15 @@ public:
     int getVida() const { return vida; }
 
 
+    bool getActivo() const { return vida >0; }
+
+    void jugadorInactivo() {
+        util.colorRojo("_____________________________________");
+        util.colorRojo(" Perdio la batalla contra el Enemigo ");
+        util.colorRojo("_____________________________________");
+    }
         ~Jugador() override = default;
+
 };
 
 

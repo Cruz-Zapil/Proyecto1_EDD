@@ -2,12 +2,14 @@
 #define PISTA_H
 
 #include "Objeto.h"
+#include "Util.h"
 
 
 class Pista : public Objeto {
 
   private:
     string temperatura;
+    Util util;
 
   public:
 
@@ -15,9 +17,11 @@ class Pista : public Objeto {
     Objeto("Pista"),
     temperatura("Frio"){};
 
-    string getPista(){
-      return temperatura;
+    void  getPista(){
+      util.colorVerdeJ("____________  "); util.colorAmarilloT(temperatura); util.colorVerde("  ____________");
     };
+
+
 
     void setPista(string temperatura){
       this->temperatura = temperatura;

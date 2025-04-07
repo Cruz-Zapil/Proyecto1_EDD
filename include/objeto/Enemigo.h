@@ -3,30 +3,47 @@
 
 #include "Objeto.h"
 #include <string>
+#include "Util.h"
 
 class Enemigo : public Objeto {
     private:
         int vida;
         int nivelAtaque;
+        int posicion;
 
     public:
+        Util util;
         Enemigo()
           : Objeto("Enemigo"),
-          vida(3),
-          nivelAtaque(7){};
+          vida(util.aleatorio_en_rango(6,15)),
+          nivelAtaque(util.aleatorio_en_rango(6,10)){};
 
 
         int ataqueEnemigo(){
         return nivelAtaque;
         };
 
-        void recibirAtaque(int ataque, string nombre){
+        void recibirAtaque(int ataque){
 
             vida -= ataque;
-            cout << "El enemigo  ha recibido un ataque de" << ataque << endl;
+            cout<<endl;
+            util.colorVerde("_____________________________________");
+            util.colorVerdeJ("¡El jugador ha lanzado un ataque de " + to_string(ataque) );
+            cout << endl;
+            util.colorVerde("puntos! ➤ Vida reducida.");
+            util.colorRojo ("💚 vida:  "+ to_string(vida));
+            util.colorRojo ("_____________________________________");
         };
 
         int getVida(){return vida;};
+    void enemyInactivo() {
+
+            util.colorRojo("_____________________________________");
+            util.colorRojo(" Perdio la batalla contra el Jugador ");
+            util.colorRojo("_____________________________________");
+
+    }
+        bool getActivo() const { return vida > 0; }
         
         ~Enemigo() override = default;
 };
