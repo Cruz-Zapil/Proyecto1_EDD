@@ -2,6 +2,8 @@
 #define TABLERO_H
 
 #include <iostream>
+#include <Tesoro.h>
+
 #include "Util.h"
 #include "Objeto.h"
 #include "Jugador.h"
@@ -39,9 +41,9 @@ public:
     }
 };
 
-/// ==========================
+
 /// Clase Tablero
-/// ==========================
+
 template<typename T>
 class Tablero {
 public:
@@ -71,9 +73,9 @@ public:
     NodoCasilla<T> *casillaSiguiente(Objeto *jugador, string direccion);
 };
 
-/// ==========================
+
 /// Implementación de Métodos
-/// ==========================
+
 
 template<typename T>
 Tablero<T>::Tablero(int filas, int columnas, int altura) {
@@ -87,6 +89,7 @@ Tablero<T>::Tablero(int filas, int columnas, int altura) {
 
 template<typename T>
 void Tablero<T>::construirTablero3D() {
+
     tablero = new NodoCasilla<T> **[fila];
     for (int i = 0; i < fila; i++) {
         tablero[i] = new NodoCasilla<T> *[columna];
@@ -150,7 +153,10 @@ void Tablero<T>::imprimirTablero2D(int z) {
                     util.colorMagentaP("[╬] ");
                 } else if (dynamic_cast<Pocima *>(obj)) {
                     util.colorAzulP("[°] ");
-                } else {
+                }/*else if (dynamic_cast<Tesoro *>(obj)) {
+                    util.colorAmarilloT("[T] ");
+                }*/
+                else {
                     cout << "[ ] ";
                 }
             } else {
@@ -160,7 +166,6 @@ void Tablero<T>::imprimirTablero2D(int z) {
         cout << endl;
     }
 }
-
 
 template<typename T>
 NodoCasilla<T> *Tablero<T>::casillaSiguiente(Objeto *jugador, string direccion) {

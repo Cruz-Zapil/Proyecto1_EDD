@@ -7,7 +7,8 @@
 using namespace std;
 
 class Objeto {
-private:
+
+protected:
     string tipoObjeto;
     int posicionX, posicionY, posicionZ;
 

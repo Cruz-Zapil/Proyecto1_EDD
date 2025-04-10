@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <chrono>
 
 #include "Jugar.h"
 #include "Trampa.h"
@@ -9,13 +10,13 @@
 #include "Pista.h"
 #include "Pocima.h"
 
-
 using namespace std;
+using namespace std::chrono;
 
 
 void Jugar::iniciarJuego() {
-    string nombreJugador;
-
+    // iniciar tiempo
+    iniciarCronometro();
     util.colorVerde(" Ingrese su nombre: ");
     cin >> nombreJugador;
     jugador = new Jugador(nombreJugador);
@@ -39,7 +40,6 @@ void Jugar::iniciarJuego() {
     crearPista();
     crearObjetos();
     tablero3D->imprimirTablero2D(jugador->getPosZ());
-
     jugar();
 }
 
@@ -52,34 +52,24 @@ void Jugar::crearTablero(int fila, int columna, int altura) {
 }
 
 void Jugar::crearPersonaje() {
-    bool tmpPersonaje;
-    do {
-        int tmpx = util.aleatorio_en_rango(0, fila - 1);
-        int tmpy = util.aleatorio_en_rango(0, columna - 1);
-        int tmpz = util.aleatorio_en_rango(0, altura - 1);
-        tmpPersonaje = (tablero3D->setObjeto(tmpx, tmpy, tmpz, jugador));
-
-        if (tmpPersonaje) {
-            cout << "Jugador creado en (" << tmpx << ", " << tmpy << ", " << tmpz << ")\n";
-            jugador->setPosicion(tmpx, tmpy, tmpz);
-        }
-    } while (!tmpPersonaje);
+    if (!colocarObjetoEnTablero(jugador)) {
+        delete jugador; // liberar memoria
+    }
 }
 
 void Jugar::crearTesoro() {
     Objeto *tesoro = new Tesoro();
     if (!colocarObjetoEnTablero(tesoro)) {
-        delete tesoro; // Si no se colocó, liberar memoria
+        delete tesoro; // liberar puntero
     }
 }
-
 
 void Jugar::crearPista() {
     int cantidad = numeroNodos / 8;
     for (int i = 0; i < cantidad; i++) {
         Objeto *pista = new Pista();
         if (!colocarObjetoEnTablero(pista)) {
-            delete pista; // Liberar si no se pudo colocar
+            delete pista; // Liberar puntero
         }
     }
 }
@@ -99,7 +89,6 @@ void Jugar::crearObjetos() {
         if (!colocarObjetoEnTablero(trampa)) {
             delete trampa;
         }
-
         // Pócima
         Objeto *pocima = new Pocima();
         if (!colocarObjetoEnTablero(pocima)) {
@@ -108,18 +97,19 @@ void Jugar::crearObjetos() {
     }
 }
 
-
 bool Jugar::colocarObjetoEnTablero(Objeto *obj) {
     int intentos = 0;
     int intentosFijos = numeroNodos / 8;
     bool colocado = false;
     while (!colocado && intentos < intentosFijos) {
-        int x = util.aleatorio_en_rango(0, fila);
-        int y = util.aleatorio_en_rango(0, columna);
-        int z = util.aleatorio_en_rango(0, altura);
+        int x = util.aleatorio_en_rango(0, fila - 1);
+        int y = util.aleatorio_en_rango(0, columna - 1);
+        int z = util.aleatorio_en_rango(0, altura - 1);
         colocado = tablero3D->setObjeto(x, y, z, obj);
+
         if (colocado) {
-            // Guardar la posición si el objeto es un Tesoro
+            // chequeamos que tipo de objeto es:
+            // si es tesoro guradamos su posicion
             Tesoro *t = dynamic_cast<Tesoro *>(obj);
             if (t != nullptr) {
                 tesoroX = x;
@@ -127,18 +117,27 @@ bool Jugar::colocarObjetoEnTablero(Objeto *obj) {
                 tesoroZ = z;
             }
 
-            // Si es una pista, asignar la pista según distancia al tesoro
+            // si es personaje
+            Jugador *jugador = dynamic_cast<Jugador *>(obj);
+
+            if (jugador != nullptr) {
+                cout << "Jugador creado en (" << x << ", " << y << ", " << z << ")\n";
+            }
+
+            // si es pista
+            // le colocamos la pista depende de la distancia
             Pista *pista = dynamic_cast<Pista *>(obj);
             if (pista != nullptr) {
                 int distancia = abs(x - tesoroX) + abs(y - tesoroY) + abs(z - tesoroZ);
                 if (distancia == 1) {
                     pista->setPista("Caliente");
-                } else if (distancia <= 3) {
+                } else if (distancia <= 2) {
                     pista->setPista("Tibio");
                 } else {
                     pista->setPista("Frío");
                 }
             }
+            obj->setPosicion(x, y, z);
         } else {
             ++intentos;
         }
@@ -158,10 +157,11 @@ void Jugar::jugar() {
         util.colorMagenta("___________________________________");
         cin >> direccion;
 
-
         moverJugador(direccion);
         vida = jugador->getActivo();
-    } while (vida);
+    } while (vida && !tesoroEncontrado);
+
+    guardarRegistro();
 }
 
 
@@ -182,7 +182,9 @@ void Jugar::moverJugador(string direccion) {
             } else if (dynamic_cast<Pista *>(objDestino)) {
                 manejarPista(dynamic_cast<Pista *>(objDestino));
             } else if (dynamic_cast<Tesoro *>(objDestino)) {
-                manejarTesoro(dynamic_cast<Tesoro *>(objDestino));
+                tesoroEncontrado = true;
+                jugador->tesoroEncontrado();
+
             } else {
                 util.colorRojo("Movimiento inválido: la casilla está ocupada por un objeto desconocido.");
             }
@@ -195,14 +197,14 @@ void Jugar::moverJugador(string direccion) {
 }
 
 
-
 void Jugar::iniciarBatalla(Objeto *obj) {
+    Enemigo *enemigo = dynamic_cast<Enemigo *>(obj);
+
     cout << endl;
     util.colorRojo("___________________________________");
-    util.colorRojo("__ Inicia batalla con un Enemigo __");
+    util.colorRojo("__ 🧟 Inicia batalla con un Enemigo _");
+    arbolEnemy.insertar(enemigo);
     util.colorRojo("___________________________________");
-
-    Enemigo* enemigo = dynamic_cast<Enemigo *>(obj);
 
     do {
         bool vidaJugador = jugador->getActivo();
@@ -219,7 +221,7 @@ void Jugar::iniciarBatalla(Objeto *obj) {
             enemigo->recibirAtaque(enemigo->ataqueEnemigo());
         } else {
             jugador->jugadorInactivo();
-            cout<<endl<<endl;
+            cout << endl << endl;
             util.colorRojo("_________________________________");
             util.colorRojo("________ JUEGO TERMINADO ________");
             util.colorRojo("___________   PERDIO  ___________");
@@ -235,27 +237,30 @@ void Jugar::iniciarBatalla(Objeto *obj) {
             actualizarPosicion();
             break;
         }
-
     } while (true);
 }
 
 
-void Jugar::manejarPista(Objeto *obj) {
+void Jugar::manejarPista(Objeto *obj){
+    Pista *pista = dynamic_cast<Pista *>(obj);
     cout << endl << endl;
     util.colorVerde("___________________________________");
     util.colorVerde("______   Encontro una pista  ______");
     util.colorVerde("___________________________________");
-    dynamic_cast<Pista *>(obj)->getPista();
+    pista->getPista();
+    arbolPista.insertar(pista);
     util.colorVerde("___________________________________");
     actualizarPosicion();
 }
 
 void Jugar::manejarTrampa(Objeto *obj) {
     cout << endl << endl;
+    Trampa *trampa = dynamic_cast<Trampa *>(obj);
     util.colorRojo("___________________________________");
     util.colorRojo("_____   Encontro una Trampa   _____");
     util.colorRojo("___________________________________");
-    int tmp = dynamic_cast<Trampa *>(obj)->getAtaqueTrampa();
+    arbolTrampa.insertar(trampa);
+    int tmp = trampa->getAtaqueTrampa();
     jugador->recibirAtaque(tmp, " Trampa ");
     util.colorRojo("___________________________________");
     actualizarPosicion();
@@ -273,22 +278,56 @@ void Jugar::manejarPocima(Objeto *obj) {
 }
 
 
-void Jugar::manejarTesoro(Objeto *obj) {
-    cout << endl << endl;
-    util.colorAzul("___________________________________");
-    util.colorAzul("_____   Encontro el \"TESORO\"  _____");
-    util.colorAzul("___________________________________");
-    util.colorVerde("___________________________________");
-    util.colorVerde("__________ JUEGO TERMINADO ________");
-    util.colorVerde("_____________   GANO!!  ___________");
-    util.colorVerde("___________________________________");
-}
-
 void Jugar::actualizarPosicion() {
+    //contamos el moviemiento:
+    cantMovimiento += 1;
     // Si la casilla no está ocupada, solo movemos al jugador
     tablero3D->eliminarObjeto(jugador->getPosX(), jugador->getPosY(), jugador->getPosZ());
     jugador->setPosicion(destino->x, destino->y, destino->z);
     tablero3D->setObjeto(jugador->getPosX(), jugador->getPosY(), jugador->getPosZ(), jugador);
     // Imprimir el tablero después del movimiento
     tablero3D->imprimirTablero2D(jugador->getPosZ());
+}
+
+void Jugar::guardarRegistro() {
+    // duracion de partida:
+    auto finPartida = high_resolution_clock::now();
+    auto duracion = duration_cast<seconds>(finPartida - inicioPartida);
+
+    jugador->setTime(duracion.count());
+    jugador->setCantMovimiento(cantMovimiento);
+    /// Mostrar Estadistica:
+
+    util.colorAmarillo("___________________________________");
+    util.colorAmarillo("__________ RESUMEN DE JUEGO _______");
+    util.colorAmarillo("___________________________________");
+
+    util.colorCyan("👤 Nombre del Jugador: " + jugador->getNombre());
+    util.colorCyan("⏳  Tiempo empleado: " + to_string(duracion.count()) + " segundos");
+    util.colorCyan("🎮 Total de movimientos: " + to_string(cantMovimiento));
+    util.colorVerde("🌟 Puntos acumulados: " + to_string(jugador->getPuntos()));
+    util.colorCyan(
+        "📍 Ubicación del tesoro: ("
+        + to_string(tesoroX)
+        + ", " + to_string(tesoroY)
+        + ", " + to_string(tesoroZ) +")");
+
+    util.colorAmarillo("🔎 Pistas encontradas:");
+    arbolPista.mostrar();
+
+    util.colorRojo("💀 Enemigos encontrados:");
+    arbolEnemy.mostrar();
+
+    util.colorMagenta("💣 Trampas encontradas:");
+    arbolTrampa.mostrar();
+
+    /// guardar Registro antes
+    tesoroEncontrado = false;
+    cantMovimiento = 0;
+    tesoroX = 0;
+    tesoroY = 0;
+    tesoroZ = 0;
+    arbolEnemy.vaciar();
+    arbolTrampa.vaciar();
+    arbolPista.vaciar();
 }

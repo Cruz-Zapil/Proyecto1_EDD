@@ -22,13 +22,11 @@ int main()
     util.colorVerde("_____   Bienvenido  ______");
     util.colorRojo ("__________________________");
     util.colorAzul ("__________________________");
-    cout << endl<<endl;
 
 
     do
     {
         cout << endl
-             << endl
              << endl
              << endl;
 

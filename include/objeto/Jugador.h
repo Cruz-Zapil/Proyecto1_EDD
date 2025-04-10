@@ -15,6 +15,7 @@ private:
     int tiempoTotal;
     int puntos;
     int nivelAtaque;
+    int cantMovimiento;
     Util util;
 
 public:
@@ -30,6 +31,7 @@ public:
 
     void recibirAtaque(int ataque, string atacante) {
         vida -= ataque;
+        puntos -= ataque/2;
         cout<<endl;
         util.colorRojo("_____________________________________");
         util.colorRojoA("¡" + atacante + " ha lanzado un ataque de " + to_string(ataque) );
@@ -46,6 +48,7 @@ public:
 
     void recibirVidaExtra(int extra) {
         vida += extra;
+        puntos += extra/2;
         cout<<endl;
         util.colorVerde("_____________________________________");
         util.colorVerdeJ("💚 ¡Has encontrado una pócima! +");
@@ -61,13 +64,35 @@ public:
     string getNombre() const { return nombre; }
     int getVida() const { return vida; }
 
+    void setTime(int time) {
+        tiempoTotal = time;
+    }
+    void setCantMovimiento(int movimiento) {
+        cantMovimiento = movimiento;
+    }
 
+    void tesoroEncontrado() {
+        cout << endl << endl;
+        util.colorAzul("___________________________________");
+        util.colorAzul("_____   Encontro el \"TESORO\"  _____");
+        util.colorAzul("___________________________________");
+        util.colorVerde("___________________________________");
+        util.colorVerde("__________ JUEGO TERMINADO ________");
+        util.colorVerde("_____________   GANO!!  ___________");
+        util.colorVerde("___________________________________");
+        puntos +=50;
+    }
+    int getPuntos() {
+        return puntos;
+    }
     bool getActivo() const { return vida >0; }
 
     void jugadorInactivo() {
         util.colorRojo("_____________________________________");
         util.colorRojo(" Perdio la batalla contra el Enemigo ");
         util.colorRojo("_____________________________________");
+        // perdio la batalla tine 0 putos
+        puntos=0;
     }
         ~Jugador() override = default;
 

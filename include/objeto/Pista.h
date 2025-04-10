@@ -21,7 +21,15 @@ class Pista : public Objeto {
       util.colorVerdeJ("____________  "); util.colorAmarilloT(temperatura); util.colorVerde("  ____________");
     };
 
+    string getPistaTree() {
+    return temperatura;
+  }
 
+
+  int getClaveUbicacion() {
+    // Normal para enemigos: XYZ → 153
+    return posicionX * 100 + posicionY * 10 + posicionZ;
+  }
 
     void setPista(string temperatura){
       this->temperatura = temperatura;

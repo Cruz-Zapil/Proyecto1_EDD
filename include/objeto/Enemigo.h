@@ -9,7 +9,7 @@ class Enemigo : public Objeto {
     private:
         int vida;
         int nivelAtaque;
-        int posicion;
+
 
     public:
         Util util;
@@ -43,6 +43,14 @@ class Enemigo : public Objeto {
             util.colorRojo("_____________________________________");
 
     }
+
+    int getClaveUbicacion() {
+        // Normal para enemigos: XYZ → 153
+        return posicionX * 100 + posicionY * 10 + posicionZ;
+    }
+
+
+
         bool getActivo() const { return vida > 0; }
         
         ~Enemigo() override = default;

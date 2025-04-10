@@ -10,7 +10,7 @@ class Trampa : public Objeto {
   private:
      int nivelDanio;
      Util utils;
-     int posicion;
+
 
   public:
 
@@ -21,6 +21,16 @@ class Trampa : public Objeto {
     int getAtaqueTrampa(){
       return nivelDanio;
     };
+
+    int getClaveUbicacion() {
+        // Invertimos el orden  ZYX → 351
+        return posicionZ * 100 + posicionY * 10 + posicionX;
+    }
+
+
+    void getPosicion() {
+        cout<<posicionX;
+    }
 
     ~Trampa() override = default;
 
