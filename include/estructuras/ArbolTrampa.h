@@ -25,6 +25,12 @@ private:
 
     NodoTrampa* raiz = nullptr;
 
+    /// complejidad:
+    /// complejidad insertar:
+    /// peor de lo casos: O(log n)
+    /// mejor de los casos: O(n)
+    ///
+
     NodoTrampa* insertar(NodoTrampa* nodo, Trampa* t) {
         if (nodo == nullptr) return new NodoTrampa(t);
 
@@ -50,6 +56,11 @@ public:
         raiz = insertar(raiz, t);
     }
 
+    /// complejidad:
+    /// complejidad enOrden:
+    /// peor de lo casos: O( n)
+    /// mejor de los casos: O( n)
+    ///
     void enOrden(NodoTrampa* nodo, string lado ) {
         if (nodo != nullptr) {
             enOrden(nodo->izquierda, "izquierda");
@@ -63,6 +74,11 @@ public:
         enOrden(raiz, "Raiz");
     }
 
+    /// complejidad:
+    /// complejidad vaciar:
+    /// peor de lo casos: O( n)
+    /// mejor de los casos: O( n)
+    ///
     void vaciar() {
         limpiar(raiz);
         raiz = nullptr;

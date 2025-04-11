@@ -87,6 +87,12 @@ Tablero<T>::Tablero(int filas, int columnas, int altura) {
     construirTablero3D();
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(i*j*k) = n²
+/// mejor de los casos: O(i*j*k) = n²
+///
+
 template<typename T>
 void Tablero<T>::construirTablero3D() {
 
@@ -126,6 +132,11 @@ void Tablero<T>::construirTablero3D() {
     inicio = &tablero[0][0][0];
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(i*j*k) = n²
+/// mejor de los casos: O(i*j*k) = n²
+///
 template<typename T>
 void Tablero<T>::imprimirTablero2D(int z) {
 
@@ -167,6 +178,11 @@ void Tablero<T>::imprimirTablero2D(int z) {
     }
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 template<typename T>
 NodoCasilla<T> *Tablero<T>::casillaSiguiente(Objeto *jugador, string direccion) {
     NodoCasilla<T> *destino = nullptr;
@@ -198,6 +214,11 @@ NodoCasilla<T> *Tablero<T>::casillaSiguiente(Objeto *jugador, string direccion) 
 }
 
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 template<typename T>
 NodoCasilla<T> *Tablero<T>::getObjeto(int x, int y, int z) {
     if (x >= 0 && x < fila && y >= 0 && y < columna && z >= 0 && z < altura) {
@@ -206,6 +227,11 @@ NodoCasilla<T> *Tablero<T>::getObjeto(int x, int y, int z) {
     return nullptr;
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 
 template<typename T>
 bool Tablero<T>::setObjeto(int x, int y, int z, T *objeto) {
@@ -221,6 +247,11 @@ bool Tablero<T>::setObjeto(int x, int y, int z, T *objeto) {
     return false;
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 template<typename T>
 void Tablero<T>::eliminarObjeto(int x, int y, int z) {
     // Verificamos que la posición sea válida

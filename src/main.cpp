@@ -15,6 +15,7 @@ int main()
     CargarRegistro cargarRegistro ;
     Util  util ;
     Jugar jugar;
+    CargarRegistro cargarReg;
 
 
     util.colorAzul ("__________________________");
@@ -70,12 +71,14 @@ int main()
 
         case 2:
             cout << "Cargar Registro" << endl;
+
             cargarRegistro.cargarUnRegistro();
             
             break;
 
         case 3:
             cout << "Mostrar Reporte" << endl;
+            cargarRegistro.mostrarRegistroOrdenado();
             break;
 
         case 4:

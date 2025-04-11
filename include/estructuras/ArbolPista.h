@@ -30,6 +30,12 @@ class ArbolPista {
 
     NodoPista* raiz = nullptr;
     int cont =0;
+
+    /// complejidad:
+    /// complejidad insertar:
+    /// peor de lo casos: O(log n)
+    /// mejor de los casos: O( n)
+    ///
     NodoPista* insertar(NodoPista* nodo, Pista* pista) {
 
         if (nodo == nullptr) {
@@ -46,6 +52,11 @@ class ArbolPista {
     }
 
 public:
+    /// complejidad:
+    /// complejidad insertar:
+    /// peor de lo casos: O( n)
+    /// mejor de los casos: O( n)
+    ///
     void limpiar(NodoPista* nodo) {
         if (nodo == nullptr) {
             limpiar(nodo->izquierda);
@@ -54,10 +65,16 @@ public:
         }
     }
 
+
     void insertar(Pista* t) {
         raiz = insertar(raiz, t);
     }
 
+    /// complejidad:
+    /// complejidad insertar:
+    /// peor de lo casos: O( n)
+    /// mejor de los casos: O( n)
+    ///
     void enOrden(NodoPista* nodo, string lado) {
         if (nodo != nullptr) {
             enOrden(nodo->izquierda, "izquierda");

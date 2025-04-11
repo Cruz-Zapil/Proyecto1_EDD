@@ -1,6 +1,8 @@
 #ifndef JUGAR_H
 #define JUGAR_H
 
+#include <CargarRegistro.h>
+
 #include "ArbolEnemy.h"
 #include "Tablero.h"
 #include "Objeto.h"
@@ -37,6 +39,9 @@ class Jugar {
     Jugador* jugador;
     Tesoro tesoro;
 
+    /// registro :
+    CargarRegistro registros;
+
 public:
     void iniciarJuego();
 
@@ -56,7 +61,7 @@ public:
 
     void moverJugador(string direccion);
 
-    void registro();
+    void guardarRegistro();
 
     void iniciarBatalla(Objeto *obj);
 
@@ -67,9 +72,6 @@ public:
     void manejarPista(Objeto *obj);
 
     void actualizarPosicion();
-
-
-    void guardarRegistro();
 
     void iniciarCronometro() {
         inicioPartida = high_resolution_clock::now();

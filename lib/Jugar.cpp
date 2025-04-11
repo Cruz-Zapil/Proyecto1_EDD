@@ -14,6 +14,11 @@ using namespace std;
 using namespace std::chrono;
 
 
+/// complejidad:
+/// complejidad iniciar Juego:
+/// peor de lo casos: O(n²)
+/// mejor de los casos: O(n)
+///
 void Jugar::iniciarJuego() {
     // iniciar tiempo
     iniciarCronometro();
@@ -97,6 +102,11 @@ void Jugar::crearObjetos() {
     }
 }
 
+/// complejidad:
+/// complejidad insertar:
+/// peor de lo casos: O(n)
+/// mejor de los casos: O(n)
+///
 bool Jugar::colocarObjetoEnTablero(Objeto *obj) {
     int intentos = 0;
     int intentosFijos = numeroNodos / 8;
@@ -146,6 +156,11 @@ bool Jugar::colocarObjetoEnTablero(Objeto *obj) {
 }
 
 
+/// complejidad:
+/// complejidad insertar:
+/// peor de lo casos: O(n)
+/// mejor de los casos: O(1)
+///
 void Jugar::jugar() {
     bool vida = false;
 
@@ -164,6 +179,11 @@ void Jugar::jugar() {
     guardarRegistro();
 }
 
+/// complejidad:
+/// complejidad insertar:
+/// peor de lo casos: O(n)
+/// mejor de los casos: O(1)
+///
 
 void Jugar::moverJugador(string direccion) {
     destino = tablero3D->casillaSiguiente(jugador, direccion);
@@ -196,6 +216,11 @@ void Jugar::moverJugador(string direccion) {
     }
 }
 
+/// complejidad:
+/// complejidad insertar:
+/// peor de lo casos: O(n)
+/// mejor de los casos: O(1)
+///
 
 void Jugar::iniciarBatalla(Objeto *obj) {
     Enemigo *enemigo = dynamic_cast<Enemigo *>(obj);
@@ -277,6 +302,11 @@ void Jugar::manejarPocima(Objeto *obj) {
     actualizarPosicion();
 }
 
+/// complejidad:
+/// complejidad insertar:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 
 void Jugar::actualizarPosicion() {
     //contamos el moviemiento:
@@ -289,6 +319,11 @@ void Jugar::actualizarPosicion() {
     tablero3D->imprimirTablero2D(jugador->getPosZ());
 }
 
+/// complejidad:
+/// complejidad guardar registro:
+/// peor de lo casos: O(1)
+/// mejor de los casos: O(1)
+///
 void Jugar::guardarRegistro() {
     // duracion de partida:
     auto finPartida = high_resolution_clock::now();
@@ -321,7 +356,11 @@ void Jugar::guardarRegistro() {
     util.colorMagenta("💣 Trampas encontradas:");
     arbolTrampa.mostrar();
 
+
     /// guardar Registro antes
+     registros.guardarRegistroCSV(jugador);
+
+    /// limpiear variables
     tesoroEncontrado = false;
     cantMovimiento = 0;
     tesoroX = 0;
@@ -330,4 +369,9 @@ void Jugar::guardarRegistro() {
     arbolEnemy.vaciar();
     arbolTrampa.vaciar();
     arbolPista.vaciar();
+    delete jugador;
+    delete tablero3D;
+
+
 }
+

@@ -29,6 +29,14 @@ public:
         nivelAtaque(5){};
 
 
+    Jugador(string nom, int pts, int tiempo, int movimiento) {
+        this->nombre = nom;
+        this->puntos = pts;
+        this->tiempoTotal= tiempo;
+        this->cantMovimiento = movimiento;
+    }
+
+
     void recibirAtaque(int ataque, string atacante) {
         vida -= ataque;
         puntos -= ataque/2;
@@ -58,7 +66,12 @@ public:
 
     }
 
-
+    void mostrarInfoJugador() const {
+        cout << "👤 Nombre: " << nombre
+             << " | 🏆 Puntos: " << puntos
+             << " | ⏱️ Tiempo: " << tiempoTotal << "s"
+             << " | 🎮 Movimientos: " << cantMovimiento << endl;
+    }
 
     // Métodos adicionales
     string getNombre() const { return nombre; }
@@ -69,6 +82,10 @@ public:
     }
     void setCantMovimiento(int movimiento) {
         cantMovimiento = movimiento;
+    }
+
+    int getCantMovimiento() {
+        return cantMovimiento;
     }
 
     void tesoroEncontrado() {
@@ -93,6 +110,11 @@ public:
         util.colorRojo("_____________________________________");
         // perdio la batalla tine 0 putos
         puntos=0;
+    }
+
+
+    int getTime() {
+        return tiempoTotal;
     }
         ~Jugador() override = default;
 

@@ -33,7 +33,7 @@ public:
     // ingresar al final
     void ingresar(Jugador* jug) {
         NodoJugador* nuevo = new NodoJugador(jug);
-        if (inicio!=nullptr) {
+        if (inicio==nullptr) {
             inicio= nuevo;
         }else {
             NodoJugador* tmp = inicio;
@@ -65,17 +65,36 @@ public:
         } while (!ordenado);
     }
 
-
-    // Destructor para liberar memoria
-    ~ListaEnlazada() {
-        Nodo* temp;
-        while (cabeza != nullptr) {
-            temp = cabeza;
-            cabeza = cabeza->siguiente;
-            delete temp;
+    void mostrarJugadores() {
+        NodoJugador* tmp = inicio;
+        while (tmp != nullptr) {
+            tmp->jugador->mostrarInfoJugador();  // Método que muestra datos
+            tmp = tmp->siguiente;
         }
     }
 
+    void limpiarLista() {
+        NodoJugador* temp;
+        while (inicio != nullptr) {
+            temp = inicio;
+            inicio = inicio->siguiente;
+            delete temp->jugador;  // También libera la memoria
+            delete temp;
+        }
+        inicio = nullptr;
+    }
+
+
+    // Destructor
+    ~OrdenJugadores() {
+        NodoJugador* temp;
+        while (inicio != nullptr) {
+            temp = inicio;
+            inicio = inicio->siguiente;
+            delete temp->jugador; // liberamos también el jugador
+            delete temp;
+        }
+    }
 
 };
 
